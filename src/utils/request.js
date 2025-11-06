@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { Toast } from 'vant'
 // 创建一个新的axios实例
 const request = axios.create({
   baseURL: 'http://smart-shop.itheima.net/index.php?s=/api',
@@ -17,8 +17,14 @@ request.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 request.interceptors.response.use(function (response) {
-  // 对响应数据做点什么
-  return response.data
+  // 拦截响应数据 如果响应数据状态码不等于200 就显示返回的响应信息
+  const res = response.data
+  if (res.status !== 200) {
+    Toast(res.message)
+    return Promise.reject(res.message)
+  }
+  // 如果响应数据状态码等于200 就返回响应数据
+  return res
 }, function (error) {
   // 对响应错误做点什么
   return Promise.reject(error)
