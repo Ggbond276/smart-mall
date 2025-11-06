@@ -2,9 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Tabbar, TabbarItem } from 'vant'
-Vue.use(Tabbar).use(TabbarItem)
-Vue.use(Button)
+import '@/style/common.css'
+import '@/utils/vant-ui.js'
 Vue.config.productionTip = false
 
 new Vue({
