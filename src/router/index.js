@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import layout from '@/views/layout/index.vue'
 import login from '@/views/login/index.vue'
 import search from '@/views/search/index.vue'
+import searchlist from '@/views/search/searchlist.vue'
 import pay from '@/views/pay/index.vue'
 import myorder from '@/views/myorder/index.vue'
 import prodetail from '@/views/prodetail/index.vue'
@@ -12,6 +13,7 @@ import category from '@/views/layout/category.vue'
 import user from '@/views/layout/user.vue'
 import cart from '@/views/layout/cart.vue'
 
+import { getUserInfo } from '@/utils/storage'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -28,10 +30,24 @@ const router = new VueRouter({
     },
     { path: '/login', component: login },
     { path: '/search', component: search },
+    { path: '/searchlist', component: searchlist },
     { path: '/pay', component: pay },
     { path: '/myorder', component: myorder },
     { path: '/prodetail/:id', component: prodetail }
   ]
+})
+// 前置路由守卫
+const authName = ['PayIndex', 'MyOrderIndex']
+router.beforeEach((to, from, next) => {
+  if (authName.includes(to.name)) {
+    if (getUserInfo().token) {
+      next()
+    } else {
+      next({ name: 'login' })
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
