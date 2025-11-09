@@ -39,7 +39,7 @@
     <div class="guess">
       <p class="guess-title">—— 猜你喜欢 ——</p>
       <div class="goods-list">
-        <GoodsItem v-for="item in goodsList" :key="item.id" :item="item"></GoodsItem>
+        <GoodsItem @click="this.$router.push(`/prodetail/${item.goods_id}`)" v-for="item in goodsList" :key="item.id" :item="item"></GoodsItem>
       </div>
     </div>
   </div>

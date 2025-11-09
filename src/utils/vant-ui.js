@@ -7,7 +7,11 @@ import {
   Search,
   Swipe, SwipeItem,
   Grid, GridItem,
-  Icon
+  Icon,
+  Lazyload,
+  Rate,
+  ActionSheet,
+  Dialog
 } from 'vant'
 
 Vue.use(NavBar)
@@ -21,3 +25,7 @@ Vue.use(SwipeItem)
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(Icon)
+Vue.use(Lazyload)
+Vue.use(Rate)
+Vue.use(ActionSheet)
+Vue.use(Dialog)

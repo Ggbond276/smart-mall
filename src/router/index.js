@@ -13,6 +13,7 @@ import category from '@/views/layout/category.vue'
 import user from '@/views/layout/user.vue'
 import cart from '@/views/layout/cart.vue'
 
+import testComponent from '@/views/testComponent.vue'
 import { getUserInfo } from '@/utils/storage'
 Vue.use(VueRouter)
 
@@ -33,7 +34,8 @@ const router = new VueRouter({
     { path: '/searchlist', component: searchlist },
     { path: '/pay', component: pay },
     { path: '/myorder', component: myorder },
-    { path: '/prodetail/:id', component: prodetail }
+    { path: '/prodetail/:id', component: prodetail },
+    { path: '/test', component: testComponent }
   ]
 })
 // 前置路由守卫

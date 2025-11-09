@@ -119,7 +119,16 @@ export default {
       setUserInfo(res.data)
       // 让user去修改仓库数据
       this.$store.commit('user/setUserInfo')
-      this.$router.push('/')
+
+      // 这里跳转回首页 但是我们现在要修改这个操作 因为我们从购买页跳转过来等下要跳回去
+      // this.$router.push('/')
+      // 登录成功后，跳转回原来的页面
+      const backUrl = this.$route.query.backUrl
+      if (backUrl) {
+        this.$router.replace(backUrl) // 跳回商品详情页
+      } else {
+        this.$router.replace('/') // 默认跳转到首页
+      }
       Toast('登陆成功')
       // 返回首页
       // 提示登陆成功
