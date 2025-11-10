@@ -273,12 +273,12 @@ export default {
       console.log('用户存在token 可以进行加入购物车操作')
       // goodsId, goodsNum, goodsSkuId
       const data = await addCart(this.token, this.productDetailList.goods_id, this.value, this.productDetailList.skuList[0].goods_sku_id)
-      console.log(this.token)
-      console.log(data.data.cartTotal)
       this.cartTotal = data.data.cartTotal
-      console.log(data.message)
       Toast(data.message)
       this.showPannel = false
+      // console.log(this.token)
+      // console.log(data.data.cartTotal)
+      // console.log(data.message)
     }
   },
   components: {

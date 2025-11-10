@@ -11,7 +11,8 @@ import {
   Lazyload,
   Rate,
   ActionSheet,
-  Dialog
+  Dialog,
+  Checkbox
 } from 'vant'
 
 Vue.use(NavBar)
@@ -29,3 +30,4 @@ Vue.use(Lazyload)
 Vue.use(Rate)
 Vue.use(ActionSheet)
 Vue.use(Dialog)
+Vue.use(Checkbox)

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Toast } from 'vant'
 import store from '@/store'
+import { getUserInfo } from '@/utils/storage'
 // 创建一个新的axios实例
 const request = axios.create({
   baseURL: 'http://smart-shop.itheima.net/index.php?s=/api',
@@ -10,6 +11,12 @@ const request = axios.create({
 // 添加请求拦截器
 request.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  // 将token添加到所有请求的请求头中
+  const token = getUserInfo().token
+  if (token) {
+    config.headers['Access-Token'] = token
+    config.headers.platform = 'H5'
+  }
   store.dispatch('loading/showLoading')
   return config
 }, function (error) {
