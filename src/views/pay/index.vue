@@ -9,13 +9,14 @@
         <van-icon name="logistics" />
       </div>
 
+      <!-- 因为地址并不是主要功能 所以我们我们暂时忽略 -->
       <div class="info" v-if="true">
         <div class="info-content">
-          <span class="name">小红</span>
-          <span class="mobile">13811112222</span>
+          <span class="name">{{ selectAddress.name }}</span>
+          <span class="mobile">{{ selectAddress.phone  }}</span>
         </div>
         <div class="info-address">
-          江苏省 无锡市 南长街 110号 504
+          {{ longAddress }}
         </div>
       </div>
 
@@ -99,12 +100,78 @@
 </template>
 
 <script>
+import { getAddressList } from '@/api/address'
+import { checkOrder } from '@/api/order'
 export default {
   name: 'PayIndex',
   data () {
-    return {}
+    return {
+      // 地址列表
+      addressList: [
+        {
+          name: '',
+          phone: '',
+          region: {
+            province: '',
+            city: '',
+            region: ''
+          },
+          detail: ''
+        }
+      ],
+      order: {},
+      personal: {}
+    }
   },
-  methods: {}
+  async created () {
+    this.getAddressList().then(() => {
+      // console.log(this.addressList[0])
+    })
+    // 实验方法用于添加一个实验地址
+    // const res = await addAddress()
+    // console.log(res)
+    // 实验完成地址已经成功添加
+    this.getOrderList().then(() => {
+      // console.log(this.order)
+      // console.log(this.personal)
+    })
+  },
+  methods: {
+    // 获取地址列表
+    async getAddressList () {
+      const { data: { list } } = await getAddressList()
+      this.addressList = list
+    },
+    // 获取商品信息列表
+    async getOrderList () {
+      if (this.mode === 'cart') {
+        const data = await checkOrder(this.mode, { cartIds: this.cartIds })
+        // this.order = order
+        // this.personal = personal
+        console.log(data)
+      }
+    }
+  },
+  computed: {
+    // 因为这个软件地址获取不是主要逻辑 所以这里直接选取了第一个地址
+    selectAddress () {
+      return this.addressList[0]
+    },
+    // 获取详细的地址信息
+    longAddress () {
+      const region = this.selectAddress.region
+      return region.province + region.city + region.region + this.selectAddress.detail
+    },
+    // 接收路由传递到参数
+    // 获取购买模式
+    mode () {
+      return this.$route.query.mode
+    },
+    // 获取商品ID
+    cartIds () {
+      return this.$route.query.cartIds
+    }
+  }
 }
 </script>
 

@@ -54,7 +54,7 @@
           <span>¥<i class="totalPrice">{{ selPrice }}</i></span>
         </div>
         <!-- 非编辑模式的时候显示这个按钮 -->
-        <button @click="$router.push('/pay')" v-if="!isEdit" :class="{ disabled: selCategory === 0 }"  :disabled="selCategory === 0" class="goPay">结算({{ selCategory }})</button>
+        <button @click="goPay()" v-if="!isEdit" :class="{ disabled: selCategory === 0 }"  :disabled="selCategory === 0" class="goPay">结算({{ selCategory }})</button>
         <!-- 编辑模式的时候显示这个按钮 -->
         <button @click="handleDelete()" v-else :class="{ disabled: selCategory === 0 }"  :disabled="selCategory === 0"  class="delete">删除</button>
       </div>
@@ -96,7 +96,7 @@ export default {
     }
     // 有token就获取数据 这里的数据会被存放在vuex里面 我们要取出来使用
     this.getCartAction().then(() => {
-      console.log(this.cartList)
+      // console.log(this.cartList)
     })
   },
   methods: {
@@ -117,6 +117,19 @@ export default {
       console.log('参数检查1:', { goodsId, goodsNum, goodsSkuId })
       if (goodsNum < 1) return
       await this.changeCountAction({ goodsId, goodsNum, goodsSkuId })
+    },
+    goPay () {
+      if (this.selCategory === 0) return
+      // push到pay页面 并携带路径参数
+      this.$router.push({
+        path: '/pay',
+        query: {
+          mode: 'cart',
+          cartIds: this.selList.map(item => item.id).join(',')
+        }
+      })
+      console.log('购物车购买页面跳转路径参数检验')
+      console.log(this.selList.map(item => item.id).join(','))
     }
   },
   computed: {
